@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Personal portfolio website" />
+  <title>Jayden — Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{
+      --bg:#000;
+      --panel:#101010;
+      --text:#fff;
+      --muted:#b7b7b7;
+      --accent:#8b5cf6;
+      --accent-soft:rgba(183,75,75,.18);
+      --line:rgba(255,255,255,.10);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:62.5%}
+    body{
+      min-height:100vh;
+      overflow-x:hidden;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Poppins",sans-serif;
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* NAV */
+    header{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:1000;
+      padding:2rem clamp(2rem,6vw,7rem);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      backdrop-filter:blur(10px);
+      background:linear-gradient(to bottom, rgba(0,0,0,.65), rgba(0,0,0,0));
+    }
+    .logo{
+      font-size:2.8rem;
+      font-weight:800;
+      letter-spacing:.02em;
+      transition:.25s ease;
+    }
+    .logo span{color:var(--accent)}
+    .logo:hover{transform:scale(1.04)}
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:3rem;
+    }
+    nav a{
+      font-size:1.5rem;
+      font-weight:500;
+      color:#eee;
+      padding:.7rem 0;
+      border-bottom:2px solid transparent;
+      transition:.25s ease;
+    }
+    nav a:hover,
+    nav a.active{
+      color:var(--accent);
+      border-bottom-color:var(--accent);
+    }
+
+    .menu-btn{
+      display:none;
+      border:0;
+      background:transparent;
+      color:#fff;
+      font-size:2.6rem;
+      cursor:pointer;
+    }
+
+    /* GENERIC */
+    section{
+      min-height:100vh;
+      width:min(100%, var(--max));
+      margin:0 auto;
+      padding:12rem 2.5rem 8rem;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:.8rem;
+      color:var(--accent);
+      font-size:1.3rem;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    .eyebrow::before{
+      content:"";
+      width:3rem;
+      height:1px;
+      background:var(--accent);
+    }
+    .section-title{
+      margin-top:1rem;
+      font-size:clamp(3.8rem,7vw,6rem);
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+    .section-title span{color:var(--accent)}
+    .section-copy{
+      margin-top:1.5rem;
+      color:var(--muted);
+      font-size:1.6rem;
+      max-width:65rem;
+    }
+
+    /* HERO */
+    #home{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:5rem;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+    #home::before{
+      content:"";
+      position:absolute;
+      width:55rem;
+      height:55rem;
+      right:-25rem;
+      top:5rem;
+      border-radius:50%;
+      background:radial-gradient(circle, var(--accent-soft), transparent 68%);
+      pointer-events:none;
+    }
+    .hero-content{
+      position:relative;
+      z-index:1;
+    }
+    .hero-title{
+      margin-top:1.2rem;
+      font-size:clamp(4.8rem,8vw,8rem);
+      line-height:.98;
+      letter-spacing:-.06em;
+    }
+    .hero-title span{color:var(--accent)}
+    .typing-wrap{
+      margin-top:1.8rem;
+      min-height:4.5rem;
+      font-size:clamp(2.2rem,3vw,3.2rem);
+      font-weight:700;
+    }
+    .typing-label{color:#fff}
+    #role{color:var(--accent)}
+    .cursor{
+      display:inline-block;
+      width:2px;
+      height:1em;
+      background:var(--accent);
+      margin-left:.25rem;
+      transform:translateY(.15em);
+      animation:blink .7s steps(1) infinite;
+    }
+    @keyframes blink{50%{opacity:0}}
+
+    .hero-copy{
+      margin-top:1.5rem;
+      max-width:62rem;
+      color:var(--muted);
+      font-size:1.6rem;
+    }
+    .socials{
+      display:flex;
+      gap:1.2rem;
+      margin:2.5rem 0;
+    }
+    .socials a{
+      width:4.6rem;
+      height:4.6rem;
+      border:2px solid var(--accent);
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      color:var(--accent);
+      font-size:1.8rem;
+      transition:.25s ease;
+    }
+    .socials a:hover{
+      color:#000;
+      background:var(--accent);
+      transform:translateY(-4px) scale(1.05);
+      box-shadow:0 0 2rem rgba(183,75,75,.35);
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:1rem;
+      padding:1.2rem 2.8rem;
+      border:2px solid var(--accent);
+      border-radius:999px;
+      color:var(--accent);
+      background:#000;
+      font-size:1.5rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      transition:.25s ease;
+    }
+    .btn:hover{
+      color:#000;
+      background:var(--accent);
+      box-shadow:0 0 2rem rgba(183,75,75,.35);
+      transform:translateY(-2px);
+    }
+
+    .hero-photo-wrap{
+      display:grid;
+      place-items:center;
+      position:relative;
+      z-index:1;
+    }
+    .hero-photo{
+      width:min(34rem,70vw);
+      aspect-ratio:1;
+      border-radius:50%;
+      object-fit:cover;
+      border:.8rem solid #0c0c0c;
+      outline:2px solid rgba(183,75,75,.6);
+      box-shadow:0 0 4rem rgba(183,75,75,.18);
+    }
+    .photo-caption{
+      margin-top:1.5rem;
+      text-align:center;
+      font-size:1.2rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:#777;
+    }
+
+    /* WORK */
+    .projects{
+      margin-top:4rem;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.5rem;
+    }
+    .project{
+      position:relative;
+      padding:2.4rem;
+      min-height:24rem;
+      background:linear-gradient(145deg,#121212,#080808);
+      border:1px solid var(--line);
+      border-radius:2rem;
+      overflow:hidden;
+      transition:.3s ease;
+    }
+    .project::after{
+      content:"";
+      position:absolute;
+      width:16rem;
+      height:16rem;
+      right:-7rem;
+      bottom:-7rem;
+      border-radius:50%;
+      background:radial-gradient(circle, var(--accent-soft), transparent 70%);
+    }
+    .project:hover{
+      transform:translateY(-6px);
+      border-color:rgba(183,75,75,.5);
+    }
+    .project small{
+      color:var(--accent);
+      font-size:1.2rem;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+    .project h3{
+      margin-top:1.2rem;
+      font-size:2.4rem;
+    }
+    .project p{
+      margin-top:1rem;
+      color:var(--muted);
+      font-size:1.4rem;
+    }
+    .project a{
+      position:absolute;
+      left:2.4rem;
+      bottom:2.2rem;
+      color:#fff;
+      font-size:1.3rem;
+      font-weight:600;
+    }
+    .project a i{color:var(--accent);margin-left:.5rem}
+
+    /* ABOUT */
+    .about-grid{
+      margin-top:4rem;
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:2rem;
+    }
+    .card{
+      background:#0c0c0c;
+      border:1px solid var(--line);
+      border-radius:2rem;
+      padding:2.6rem;
+    }
+    .facts{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:1rem;
+      margin-top:1.5rem;
+    }
+    .fact{
+      padding:1.4rem;
+      border:1px solid var(--line);
+      border-radius:1.2rem;
+    }
+    .fact strong{
+      display:block;
+      font-size:1.5rem;
+      color:var(--accent);
+    }
+    .fact span{
+      display:block;
+      margin-top:.4rem;
+      color:#bcbcbc;
+      font-size:1.3rem;
+    }
+    .card h3{font-size:2rem}
+    .card p{margin-top:1rem;color:var(--muted);font-size:1.4rem}
+
+    /* CONTACT */
+    .contact-box{
+      margin-top:4rem;
+      padding:4rem;
+      border:1px solid var(--line);
+      border-radius:2rem;
+      background:linear-gradient(145deg,#121212,#080808);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:2rem;
+    }
+    .contact-box h3{font-size:clamp(2.8rem,5vw,4.5rem);line-height:1.05}
+    .contact-box p{margin-top:1rem;color:var(--muted);font-size:1.4rem}
+
+    footer{
+      text-align:center;
+      padding:3rem 2rem 4rem;
+      color:#777;
+      font-size:1.2rem;
+      border-top:1px solid var(--line);
+    }
+
+    /* REVEAL */
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible{
+      opacity:1;
+      transform:none;
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px){
+      nav{
+        position:absolute;
+        top:7.5rem;
+        right:2rem;
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        width:min(30rem,80vw);
+        padding:1rem 2rem;
+        background:#111;
+        border:1px solid rgba(183,75,75,.35);
+        border-radius:1.5rem;
+      }
+      nav.open{display:flex}
+      nav a{padding:1.2rem 0;font-size:1.7rem}
+      .menu-btn{display:block}
+
+      #home{
+        grid-template-columns:1fr;
+        text-align:center;
+        padding-top:13rem;
+      }
+      .hero-copy{margin-left:auto;margin-right:auto}
+      .socials{justify-content:center}
+      .hero-photo-wrap{order:-1}
+      .projects{grid-template-columns:1fr}
+      .about-grid{grid-template-columns:1fr}
+      .contact-box{flex-direction:column;align-items:flex-start}
+    }
+
+    @media (max-width: 520px){
+      html{font-size:58%}
+      section{padding-left:1.8rem;padding-right:1.8rem}
+      .hero-photo{width:24rem}
+      .facts{grid-template-columns:1fr}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="#home">J<span>.</span></a>
+
+    <nav id="nav">
+      <a href="#home" class="active">Home</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+    </button>
+  </header>
+
+  <main>
+    <section id="home">
+      <div class="hero-content reveal">
+        <div class="eyebrow">Portfolio · 2026</div>
+        <h1 class="hero-title">Hi, I'm <span>Jayden</span>.</h1>
+
+        <div class="typing-wrap" aria-live="polite">
+          <span class="typing-label">I'm a </span><span id="role"></span><span class="cursor"></span>
+        </div>
+
+        <p class="hero-copy">
+          I'm a student and Air Cadet who loves Math, Science,
+          experimenting with art, and learning new technology.
+        </p>
+
+        <div class="socials">
+          <a href="https://github.com/Jayden-Aloysius" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="jaydenaloysius@gmail.com" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+        </div>
+
+        <a class="btn" href="#work">View my work <i class="fa-solid fa-arrow-down"></i></a>
+      </div>
+
+      <div class="hero-photo-wrap reveal">
+        <img
+          class="hero-photo"
+          src="https://kommodo.ai/i/g0DjZBkmeUSzzJo8CMiA"
+          alt="Photo of Jayden"
+        />
+        <div class="photo-caption"></div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="reveal">
+        <div class="eyebrow">Selected work</div>
+        <h2 class="section-title">A few things I've <span>made.</span></h2>
+        <p class="section-copy">My Current Projects.</p>
+      </div>
+
+      <div class="projects">
+        <article class="project reveal">
+          <small>01 · Math Club</small>
+          <h3>Project One</h3>
+          <p>A space for learners of all experience levels to grow.</p>
+        </article>
+
+        <article class="project reveal">
+          <small>02 · Science Prep</small>
+          <h3>Project Two</h3>
+          <p>A club for people who want to prepare for the local science fairs/contests.</p>
+        </article>
+
+        <article class="project reveal">
+          <small>03 · Creative</small>
+          <h3>Project Three</h3>
+          <p>An attempt to make a visual masterpiece.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="reveal">
+        <div class="eyebrow">A little about me</div>
+        <h2 class="section-title">Designing with <span>purpose.</span></h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="card reveal">
+          <h3>Quick facts</h3>
+          <div class="facts">
+            <div class="fact"><strong>Location</strong><span>Canada</span></div>
+            <div class="fact"><strong>Focus</strong><span>Studys/Volunteering</span></div>
+            <div class="fact"><strong>Tools</strong><span>Coding, Math, Science</span></div>
+            <div class="fact"><strong>Available</strong><span>Selected projects</span></div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <h3>My approach</h3>
+          <p>
+            I combine regimented leadership & technical reasoning with compassion & empathy to make meaningful impacts.
+          </p>
+          <p>
+         
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="reveal">
+        <div class="eyebrow">Let's connect</div>
+        <div class="contact-box">
+          <div>
+            <h3>Have a project<br><span>in mind?</span></h3>
+            <p>902-240-5679.</p>
+          </div>
+          <a class="btn" href="jaydenaloysius@gmail.com">Say hello <i class="fa-regular fa-paper-plane"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Jayden. Built with HTML, CSS & JavaScript.</footer>
+
+  <script>
+    // Mobile menu
+    const menuBtn = document.getElementById("menuBtn");
+    const nav = document.getElementById("nav");
+
+    menuBtn.addEventListener("click", () => {
+      nav.classList.toggle("open");
+      menuBtn.innerHTML = nav.classList.contains("open")
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
+
+    document.querySelectorAll("nav a").forEach(link => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("open");
+        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      });
+    });
+
+    // Typing effect
+    const roles = ["Student", "Air Cadet", "Artist"];
+    const role = document.getElementById("role");
+
+    let roleIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function typeRole(){
+      const word = roles[roleIndex];
+      role.textContent = deleting
+        ? word.slice(0, charIndex--)
+        : word.slice(0, charIndex++);
+
+      let delay = deleting ? 55 : 90;
+
+      if (!deleting && charIndex > word.length){
+        deleting = true;
+        delay = 1100;
+      } else if (deleting && charIndex < 0){
+        deleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        charIndex = 0;
+        delay = 250;
+      }
+
+      setTimeout(typeRole, delay);
+    }
+    typeRole();
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.12});
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    // Active nav link
+    const sections = [...document.querySelectorAll("main section")];
+    const navLinks = [...document.querySelectorAll("nav a")];
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(link => link.classList.remove("active"));
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add("active");
+      });
+    }, {rootMargin:"-35% 0px -55% 0px", threshold:0});
+
+    sections.forEach(section => sectionObserver.observe(section));
+  </script>
+</body>
+</html>
